@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#697586</color> //C1DDD8
+    <color name="colorPrimaryDark">#9EC4C5</color>
+    <color name="colorContractionTimerItem">@android:color/white</color>
+    <color name="colorTextContractionTimerItem">#423939</color>
+    <color name="colorAccent">#F69A9A</color>
+    <color name="colorPink">#F5E4DC</color>
+    <color name="colorOrange">#EA9A25</color>
+    <color name="colorGray">#7CDBE1E3</color>
+</resources>

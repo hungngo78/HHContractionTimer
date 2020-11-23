@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+        <variable
+            name="viewModel"
+            type="com.hh.contractiontimer.ui.measure.MeasurementViewModel" />
+    </data>
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".ui.summary.SummaryFragment">
+
+        <ExpandableListView
+            android:id="@+id/expandableListView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:dividerHeight="0.5dp"
+            android:layout_marginBottom="25dp"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom"
+            android:background="@color/colorPink"
+            android:orientation="vertical"
+            android:padding="4dp"
+            android:paddingTop="0dp"
+            app:gone="@{!viewModel.isFinished}">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/intensity"
+                android:textAlignment="center"
+                android:textColor="@android:color/black"
+                android:textSize="14sp" />
+
+            <RadioGroup
+                android:id="@+id/intensity_radioGroup"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="4dp"
+                android:clickable="true"
+                android:onCheckedChanged="@{(view, id) -> viewModel.onClickIntensity(view, id)}"
+                android:orientation="horizontal"
+                android:weightSum="1.5">
+
+                <RadioButton
+                    android:id="@+id/intensity_mild"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="0.5"
+                    android:button="@android:color/transparent"
+                    android:buttonTint="@android:color/holo_green_dark"
+                    android:checked="false"
+                    android:drawableTop="@drawable/ic_intensity_mild"
+                    android:gravity="center"
+                    android:text="@string/normal"
+                    android:textSize="10sp"
+                    android:tooltipText="Menstrual cramp" />
+
+                <RadioButton
+                    android:id="@+id/intensity_moderate"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="0.5"
+                    android:button="@android:color/transparent"
+                    android:checked="false"
+                    android:drawableTop="@drawable/ic_intensity_moderate"
+                    android:gravity="center"
+                    android:text="@string/middle"
+                    android:textSize="10sp"
+                    android:tooltipText="5 x Menstrual cramp" />
+
+                <RadioButton
+                    android:id="@+id/intensity_severe"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="0.5"
+                    android:button="@android:color/transparent"
+                    android:checked="false"
+                    android:drawableTop="@drawable/ic_intensity_severe"
+                    android:gravity="center"
+                    android:text="@string/high"
+                    android:textSize="10sp"
+                    android:tooltipText="Can't talk" />
+            </RadioGroup>
+        </LinearLayout>
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/startMeasureBtn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom|right"
+            android:layout_margin="20dp"
+            android:clickable="true"
+            android:onClick="@{(view) -> viewModel.onClickStart()}"
+            android:src="@drawable/ic_play_button"
+            app:fabSize="normal"
+            app:gone="@{viewModel.isMeasuring || viewModel.isFinished}" />
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/stopMeasureBtn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom|right"
+            android:layout_margin="20dp"
+            android:onClick="@{(view) -> viewModel.onClickStop()}"
+            android:src="@drawable/ic_stop_button"
+            app:fabSize="normal"
+            app:gone="@{!viewModel.isMeasuring()}" />
+    </FrameLayout>
+</layout>

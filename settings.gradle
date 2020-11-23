@@ -1,0 +1,4 @@
+include ':MPChartLib'
+include ':HHContractionTimer'
+include ':app'
+rootProject.name = "My Application"

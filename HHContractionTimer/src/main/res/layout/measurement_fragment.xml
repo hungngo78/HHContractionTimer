@@ -1,0 +1,162 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+        <variable
+            name="viewModel"
+            type="com.hh.contractiontimer.ui.measure.MeasurementViewModel" />
+    </data>
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".ui.measure.MeasurementFragment">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <LinearLayout
+                android:id="@+id/bottom_measure"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@android:color/transparent"
+                android:minHeight="65dp"
+                android:orientation="vertical"
+                app:layout_constraintBottom_toBottomOf="parent">
+
+                <Button
+                    android:id="@+id/start_measure"
+                    android:layout_width="match_parent"
+                    android:layout_height="65dp"
+                    android:background="@android:color/holo_green_light"
+                    android:clickable="true"
+                    android:onClick="@{(view) -> viewModel.onClickStart()}"
+                    android:text="@string/start_btn"
+                    android:textColor="@android:color/white"
+                    android:textSize="18sp"
+                    android:textStyle="bold"
+                    app:gone="@{viewModel.isMeasuring() || viewModel.isFinished}" />
+
+                <LinearLayout
+                    android:id="@+id/stop_measure"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@android:color/holo_red_dark"
+                    android:orientation="horizontal"
+                    app:gone="@{!viewModel.isMeasuring()}">
+                    <!-- "-->
+                    <Button
+                        android:layout_width="0dp"
+                        android:layout_height="65dp"
+                        android:layout_marginStart="12dp"
+                        android:layout_weight="0.5"
+                        android:background="@android:color/transparent"
+                        android:onClick="@{() -> viewModel.onClickStop()}"
+                        android:text="@string/stop_btn"
+                        android:textAlignment="textStart"
+                        android:textColor="@android:color/white"
+                        android:textSize="18sp"
+                        android:textStyle="bold"
+
+                        />
+
+                    <TextView
+                        android:id="@+id/duration_measure"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="0.5"
+                        android:gravity="center_vertical|end"
+                        android:onClick="@{() -> viewModel.onClickStop()}"
+                        android:padding="8dp"
+                        android:textColor="@android:color/white"
+                        android:textSize="16sp"
+                        android:textStyle="bold"
+                        app:text="@{viewModel.duration}" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/colorPink"
+                    android:orientation="vertical"
+                    android:padding="4dp"
+                    android:paddingTop="0dp"
+                    app:gone="@{!viewModel.isFinished}">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@string/intensity"
+                        android:textAlignment="center"
+                        android:textColor="@android:color/black"
+                        android:textSize="14sp" />
+
+                    <RadioGroup
+                        android:id="@+id/intensity_radioGroup"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_marginTop="4dp"
+                        android:clickable="true"
+                        android:onCheckedChanged="@{(view, id) -> viewModel.onClickIntensity(view, id)}"
+                        android:orientation="horizontal"
+                        android:weightSum="1.5">
+
+                        <RadioButton
+                            android:id="@+id/intensity_mild"
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="0.5"
+                            android:button="@android:color/transparent"
+                            android:buttonTint="@android:color/holo_green_dark"
+                            android:checked="false"
+                            android:drawableTop="@drawable/ic_intensity_mild"
+                            android:gravity="center"
+                            android:text="@string/normal"
+                            android:textSize="10sp"
+                            android:tooltipText="Menstrual cramp" />
+
+                        <RadioButton
+                            android:id="@+id/intensity_moderate"
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="0.5"
+                            android:button="@android:color/transparent"
+                            android:checked="false"
+                            android:drawableTop="@drawable/ic_intensity_moderate"
+                            android:gravity="center"
+                            android:text="@string/middle"
+                            android:textSize="10sp"
+                            android:tooltipText="5 x Menstrual cramp" />
+
+                        <RadioButton
+                            android:id="@+id/intensity_severe"
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="0.5"
+                            android:button="@android:color/transparent"
+                            android:checked="false"
+                            android:drawableTop="@drawable/ic_intensity_severe"
+                            android:gravity="center"
+                            android:text="@string/high"
+                            android:textSize="10sp"
+                            android:tooltipText="Can't talk" />
+                    </RadioGroup>
+
+                </LinearLayout>
+            </LinearLayout>
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recycleView"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginBottom="65dp"
+                android:background="@color/colorGray"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                app:layout_constraintBottom_toTopOf="@id/bottom_measure" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </FrameLayout>
+</layout>

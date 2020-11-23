@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/mobile_navigation"
+    app:startDestination="@+id/nav_measure">
+
+    <fragment
+        android:id="@+id/nav_home"
+        android:name="com.hh.contractiontimer.ui.home.HomeFragment"
+        android:label="@string/menu_home"
+        tools:layout="@layout/fragment_home">
+        <action
+            android:id="@+id/action_HomeFragment_to_HomeSummaryFragment"
+            app:destination="@id/nav_summary" />
+    </fragment>
+    <fragment
+        android:id="@+id/nav_profile"
+        android:name="com.hh.contractiontimer.ui.profile.ProfileFragment"
+        android:label="@string/menu_profile"
+        tools:layout="@layout/fragment_profile">
+
+
+    </fragment>
+    <fragment
+        android:id="@+id/nav_summary"
+        android:name="com.hh.contractiontimer.ui.summary.SummaryFragment"
+        android:label="@string/menu_summary"
+        tools:layout="@layout/summary_fragment">
+
+        <argument
+            android:name="myArg"
+            app:argType="string" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/nav_about"
+        android:name="com.hh.contractiontimer.ui.about.AboutFragment"
+        android:label="@string/menu_about"
+        tools:layout="@layout/fragment_about" >
+    </fragment>
+
+
+    <fragment
+        android:id="@+id/nav_measure"
+        android:name="com.hh.contractiontimer.ui.measure.MeasurementFragment"
+        android:label="@string/menu_measure"
+        tools:layout="@layout/measurement_fragment" >
+        <action
+            android:id="@+id/action_MeasurementFragment_to_MeasurementDetailFragment"
+            app:destination="@id/edit_ic" />
+    </fragment>
+
+    <dialog
+        android:id="@+id/edit_ic"
+        android:name="com.hh.contractiontimer.ui.measure.detail.MeasurementDetailFragment"
+        android:label="@string/measurement_detail"
+        tools:layout="@layout/fragment_measurement_detail"/>
+</navigation>
