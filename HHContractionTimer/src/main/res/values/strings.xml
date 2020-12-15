@@ -75,7 +75,14 @@
     <string name="summary_interval_description">Interval Durations description</string>
     <string name="summary_intensity_distribution">Intensity Distribution</string>
     <string name="summary_description">Description</string>
-
-
+    <string name="email_subject">[HHContactTimer] - My result</string>
+    <string name="email_content">Please help me check my contractTimer</string>
+    <string name="choose_email_app">Choose Email App</string>
+    <string name="choose_sms_app">Choose Message App</string>
+    <string name="share_data_title_dialog">Send contractTimer data</string>
+    <string name="share_data_description_dialog">Please choose the way that you want to share</string>
+    <string name="share_data_via_SMS">Share via SMS</string>
+    <string name="share_data_via_email">Share via Email</string>
+    <string name="share_data_dialog_close">Close</string>
 
 </resources>
