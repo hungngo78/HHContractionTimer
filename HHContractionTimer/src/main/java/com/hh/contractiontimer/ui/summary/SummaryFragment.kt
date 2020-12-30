@@ -105,6 +105,9 @@ class SummaryFragment : Fragment() {
             if (ContextCompat.checkSelfPermission(
                     requireActivity(),
                     Manifest.permission.WRITE_EXTERNAL_STORAGE
+                ) == PackageManager.PERMISSION_GRANTED && ContextCompat.checkSelfPermission(
+                    requireActivity(),
+                    Manifest.permission.READ_EXTERNAL_STORAGE
                 ) == PackageManager.PERMISSION_GRANTED
             ) {
                 //saveToGallery()
@@ -138,7 +141,6 @@ class SummaryFragment : Fragment() {
                 .setMessage(getString(R.string.share_data_description_dialog)).setPositiveButton(
                     getString(R.string.share_data_via_SMS)
                 ) { dialogInterface: DialogInterface, i: Int ->
-                    var attachedFile = getListAttachmentFile(fileNameOfBarChar, fileNameOfPieChart)
                     checkPermissionSendBySMS()
 
                 }.setNegativeButton(
@@ -167,8 +169,10 @@ class SummaryFragment : Fragment() {
         if (user?.phoneNumberOfSpouse?.isNullOrBlank() == false) { phoneList.add(user?.phoneNumberOfSpouse!!) }
         val sendIntent = Intent(Intent.ACTION_SEND_MULTIPLE)
         sendIntent.putExtra("sms_body", getString(R.string.email_content))
-        sendIntent.putExtra("address", phoneList.joinToString(separator = ","));
-        sendIntent.setClassName("com.android.mms", "com.android.mms.ui.ComposeMessageActivity");
+           // sendIntent.putExtra("address", phoneList.joinToString(separator = ","))
+        sendIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+        sendIntent.flags = Intent.FLAG_GRANT_READ_URI_PERMISSION
+     //   sendIntent.setClassName("com.android.mms", "com.android.mms.ui.ComposeMessageActivity");
         //sendIntent.type = "vnd.android-dir/mms-sms"
         sendIntent.setType("image/png");
         val attachments =
@@ -313,10 +317,9 @@ class SummaryFragment : Fragment() {
     private val PERMISSION_STORAGE = 100
     private val PERMISSIONS_REQUEST_SEND_SMS = 101
     private fun requestStoragePermission() {
-        if (ActivityCompat.shouldShowRequestPermissionRationale(
-                requireActivity(),
-                Manifest.permission.WRITE_EXTERNAL_STORAGE
-            )
+        if (ActivityCompat.shouldShowRequestPermissionRationale(requireActivity(),
+                Manifest.permission.WRITE_EXTERNAL_STORAGE) && ActivityCompat.shouldShowRequestPermissionRationale(requireActivity(),
+                Manifest.permission.READ_EXTERNAL_STORAGE)
         ) {
             println("Hung, requestStoragePermission 1")
 
@@ -328,7 +331,7 @@ class SummaryFragment : Fragment() {
                 .setAction(android.R.string.ok) {
                     ActivityCompat.requestPermissions(
                         requireActivity(),
-                        arrayOf(Manifest.permission.WRITE_EXTERNAL_STORAGE),
+                        arrayOf(Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.READ_EXTERNAL_STORAGE),
                         PERMISSION_STORAGE
                     )
                 }.show()
@@ -342,7 +345,7 @@ class SummaryFragment : Fragment() {
             ).show()
             ActivityCompat.requestPermissions(
                 requireActivity(),
-                arrayOf(Manifest.permission.WRITE_EXTERNAL_STORAGE),
+                arrayOf(Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.READ_EXTERNAL_STORAGE),
                 PERMISSION_STORAGE
             )
         }
